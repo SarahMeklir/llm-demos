@@ -1,26 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Maryland 2024 Vote Totals</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maryland Election Dashboard</title>
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
-  <h1>Maryland 2024 Presidential Vote Totals</h1>
+  <div class="container">
+    <h1>🗳️ Maryland 2024 Election Results</h1>
 
-  <div id="statewide">
-    <h2>Statewide Totals</h2>
-    <table id="statewide-table"></table>
-  </div>
+    <section>
+      <h2>📊 Statewide Totals</h2>
+      <table id="statewide-table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Total Votes</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
 
-  <div id="county-select">
-    <label for="county">Select a County:</label>
-    <select id="county"></select>
-  </div>
+    <section>
+      <h2>📍 County Breakdown</h2>
+      <label for="county-select">Select County:</label>
+      <select id="county-select"></select>
 
-  <div id="county-results">
-    <h2>County Results</h2>
-    <table id="county-table"></table>
+      <table id="county-table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Votes</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
   </div>
 
   <script src="script.js"></script>

@@ -1,41 +1,72 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f9f9f9;
-  }
-  h1 {
-    color: #333;
-  }
-  table {
-    border-collapse: collapse;
-    margin-top: 10px;
-    width: 100%;
-    max-width: 600px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: right;
-  }
-  th {
-    background-color: #f2f2f2;
-    color: #333;
-    text-align: left;
-  }
-  .bar {
-    height: 10px;
-    display: inline-block;
-    margin-left: 5px;
-  }
-  .bar.dem { background-color: #357EDD; }
-  .bar.rep { background-color: #E74C3C; }
-  .bar.lib { background-color: #F1C40F; }
-  .bar.green { background-color: #27AE60; }
-  .bar.ind { background-color: #8E44AD; }
-  .bar.oth { background-color: #95A5A6; }
-  select {
-    padding: 5px;
-    margin-top: 10px;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #e3f2fd, #fce4ec);
+  color: #333;
+  margin: 0;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  background: #ffffffcc;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.2em;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: #34495e;
+  border-bottom: 2px solid #bbb;
+  padding-bottom: 5px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: right;
+}
+
+th {
+  background-color: #2196f3;
+  color: white;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+td:first-child, th:first-child {
+  text-align: left;
+}
+
+label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+select {
+  padding: 5px 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f0f8ff;
+}
+
+select:hover {
+  background-color: #e3f2fd;
+}
