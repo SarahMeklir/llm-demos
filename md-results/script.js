@@ -1,4 +1,4 @@
-const data = `jurisdiction,harris,trump,oliver,stein,kennedy,others,total
+const csvData = `jurisdiction,harris,trump,oliver,stein,kennedy,others,total
 Allegany,9231,22141,130,136,363,136,32137
 Anne Arundel,171945,128892,2141,2429,3375,2790,311572
 Baltimore City,195109,27984,892,3222,1875,1672,230754
@@ -24,82 +24,69 @@ Washington,27260,44054,363,513,811,331,73332
 Wicomico,21513,24065,205,371,544,214,46912
 Worcester,12431,19632,139,184,342,153,32881`;
 
-const parsedData = data.trim().split("\n").map(row => row.split(","));
-const headers = parsedData[0];
-const counties = parsedData.slice(1);
+const candidates = ['harris', 'trump', 'oliver', 'stein', 'kennedy', 'others'];
 
-const nameMap = {
-  harris: "Kamala Harris",
-  trump: "Donald Trump",
-  oliver: "Chase Oliver",
-  stein: "Jill Stein",
-  kennedy: "Robert Kennedy Jr.",
-  others: "Other Candidates"
-};
+const rows = csvData.trim().split('\n').map(r => r.split(','));
+const headers = rows[0];
+const data = rows.slice(1).map(row => {
+  const entry = {};
+  headers.forEach((h, i) => entry[h] = isNaN(row[i]) ? row[i] : +row[i]);
+  return entry;
+});
 
-const colorMap = {
-  harris: "dem",
-  trump: "rep",
-  oliver: "lib",
-  stein: "green",
-  kennedy: "ind",
-  others: "oth"
-};
+const stateTotals = {};
+candidates.forEach(c => stateTotals[c] = 0);
+let stateTotalVotes = 0;
 
-function formatPercent(val, total) {
-  return ((val / total) * 100).toFixed(2) + "%";
-}
+data.forEach(row => {
+  candidates.forEach(c => stateTotals[c] += row[c]);
+  stateTotalVotes += row.total;
+});
 
-function computeStatewide() {
-  const totals = new Array(headers.length).fill(0);
-  counties.forEach(row => {
-    row.forEach((val, i) => {
-      totals[i] += i === 0 ? 0 : parseInt(val);
-    });
-  });
-  return totals;
-}
-
-function populateTable(tableId, dataRow, total) {
-  const table = document.getElementById(tableId);
-  table.innerHTML = "";
-  const headerRow = document.createElement("tr");
-  ["Candidate", "Votes", "Percentage"].forEach(h => {
-    const th = document.createElement("th");
-    th.textContent = h;
-    headerRow.appendChild(th);
-  });
-  table.appendChild(headerRow);
-
-  headers.slice(1, -1).forEach((key, i) => {
-    const row = document.createElement("tr");
-    const val = parseInt(dataRow[i + 1]);
-    const percent = formatPercent(val, total);
-    const barWidth = parseFloat(percent);
-    row.innerHTML = `<td>${nameMap[key]}</td><td>${val}</td><td>${percent} <span class='bar ${colorMap[key]}' style='width:${barWidth * 2}px'></span></td>`;
-    table.appendChild(row);
+function populateStatewideTable() {
+  const tbody = document.querySelector('#statewide-table tbody');
+  candidates.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${c.charAt(0).toUpperCase() + c.slice(1)}</td>
+      <td>${stateTotals[c].toLocaleString()}</td>
+      <td>${((stateTotals[c] / stateTotalVotes) * 100).toFixed(2)}%</td>
+    `;
+    tbody.appendChild(tr);
   });
 }
 
-function init() {
-  const statewide = computeStatewide();
-  populateTable("statewide-table", statewide, statewide[headers.length - 1]);
-
-  const select = document.getElementById("county");
-  counties.forEach(row => {
-    const option = document.createElement("option");
-    option.value = row[0];
-    option.textContent = row[0];
+function populateCountyDropdown() {
+  const select = document.getElementById('county-select');
+  data.forEach(row => {
+    const option = document.createElement('option');
+    option.value = row.jurisdiction;
+    option.textContent = row.jurisdiction;
     select.appendChild(option);
   });
 
-  select.addEventListener("change", () => {
-    const selected = counties.find(row => row[0] === select.value);
-    populateTable("county-table", selected, parseInt(selected[headers.length - 1]));
+  select.addEventListener('change', () => {
+    updateCountyTable(select.value);
   });
 
-  select.value = counties[0][0];
-  select.dispatchEvent(new Event("change"));
+  updateCountyTable(select.value);
 }
 
-document.addEventListener("DOMContentLoaded", init);
+function updateCountyTable(county) {
+  const row = data.find(r => r.jurisdiction === county);
+  const tbody = document.querySelector('#county-table tbody');
+  tbody.innerHTML = '';
+
+  candidates.forEach(c => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${c.charAt(0).toUpperCase() + c.slice(1)}</td>
+      <td>${row[c].toLocaleString()}</td>
+      <td>${((row[c] / row.total) * 100).toFixed(2)}%</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+populateStatewideTable();
+populateCountyDropdown();
