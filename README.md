@@ -4,7 +4,7 @@ A place to explore some work with LLMs.
 
 Start with [this data](https://raw.githubusercontent.com/dwillis/jour405/refs/heads/main/data/md_pres_county.csv).
 
-
+**_Here's my Chat GPT Link: https://chatgpt.com/share/6817afd6-9df4-8010-9717-09d71bb8cd1d_**
 1. Does the site work as-is, or did you need to tweak it to work?
 
    **The site works as-is, though it's simpler than the original. There is no color and the overall look is boring. The drop-down menu works and changes the election results for each county you choose.**
