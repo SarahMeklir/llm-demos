@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maryland Election Dashboard</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>🗳️ Maryland 2024 Election Results</h1>
+
+    <section>
+      <h2>📊 Statewide Totals</h2>
+      <table id="statewide-table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Total Votes</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>📍 County Breakdown</h2>
+      <label for="county-select">Select County:</label>
+      <select id="county-select"></select>
+
+      <table id="county-table">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Votes</th>
+            <th>Percentage</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
